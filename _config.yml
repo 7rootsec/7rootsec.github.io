@@ -19,7 +19,7 @@ title: 7rootsec # the main title
 tagline: Iot exploitation, Web hacking  # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
-  A minimal, responsive and feature-rich Jekyll theme for technical writing.
+  7root Blog blog packed with hack-vibes, deep-dive research, and write-ups from THM, HTB, and real lab environments. I explore different branches of cyber — from penetration testing and digital forensics to cryptography, OSINT, web security, and malware analysis. Expect hands-on guides, practical experiments, walkthroughs, notes, and discoveries from my journey in ethical hacking.
 
 # Fill in the protocol & hostname for your site.
 # e.g. 'https://username.github.io', note that it does not end with a '/'.
