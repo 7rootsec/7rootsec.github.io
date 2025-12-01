@@ -1,6 +1,6 @@
 ---
 title: TryHackme - Printer Hacking 101
-categories: [TryHackme]
+categories: [TryHackMe]
 tags: [TryHackme, Printing, ipp, Iot Hacking]
 render_with_liquid: false
 ---
