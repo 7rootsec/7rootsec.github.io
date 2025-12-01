@@ -99,7 +99,7 @@ A **basic command language** that controls how the page looks — fonts, layout,
 
 **PS draws the page, PCL formats the page, PJL controls the printer.**
 
-The Unit contain an cheat sheet of Printer Security [hacking-printers.net/wiki/index.php/Printer_Security_Testing_Cheat_Sheet](http://hacking-printers.net/wiki/index.php/Printer_Security_Testing_Cheat_Sheet)
+The Unit contain an cheat sheet of Printer Security 
 
 <img width="928" height="809" alt="Pasted image 20251201172647" src="https://github.com/user-attachments/assets/3603a0ef-a8bf-42f5-a6b4-7e69033e28fd" />
 
