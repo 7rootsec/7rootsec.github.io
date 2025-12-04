@@ -203,9 +203,3 @@ Fuel CMS instances below certain versions are vulnerable due to improper templat
 
 **7rootsec | Technical CTF Write‑Ups and Research**
 
-
-
-   
-- or a **more advanced exploitation path** showing alternative vectors.
-
-
