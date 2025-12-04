@@ -1,9 +1,7 @@
-
 ---
-title: TryHackMe - Ignite Write up
-date: 2025-12-04 22:19:00 +0100
+title: TryHackme - Ignite CTF
 categories: [TryHackMe]
-tags: [TryHackMe, fuel, wpscan, php]
+tags: [TryHackme, Printing, ipp, Iot Hacking]
 render_with_liquid: false
 ---
 
