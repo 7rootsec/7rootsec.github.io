@@ -1,9 +1,11 @@
 
+---
 title: TryHackMe - Ignite Write up
 date: 2025-12-04 22:19:00 +0100
 categories: [TryHackMe]
 tags: [TryHackMe, fuel, wpscan, php]
 render_with_liquid: false
+---
 
 <img width="512" height="512" alt="676cb3273c613c9ba00688162efc0979" src="https://github.com/user-attachments/assets/62d8e75f-ccf6-4a07-9a98-89d285f232b7" />
 
