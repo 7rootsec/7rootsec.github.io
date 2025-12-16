@@ -1,6 +1,6 @@
 ---
 title: "file-less Mawlare"
-last_modified_at: 2020-09-12T14:40:02-05:00
+last_modified_at: 2025-12-12T14:40:02-05:00
 categories:
   - Blog
   - 0day
