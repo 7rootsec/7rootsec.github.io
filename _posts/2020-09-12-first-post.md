@@ -30,10 +30,10 @@ This File-less malware is used in real life scenarios against big corporations.
 
 How to detect File-less malware?
 Classical AV or signatures are not enough. While there are no new files installed or typical telltale behavior that would make a fileless malware attack obvious, there are some warning signs to watch for. One is unusual network patterns and traces, such as your computer connecting to botnet servers. Look for signs of compromise in system memory as well as other artifacts that may have been left behind from malicious code. Also, Indicator Of Attack (IOA), instead of Indicator Of Compromise(IOC).
-IOA focuses on, behaviour, chain of events, intention of attack…
+IOA focuses on, behaviour, chain of events, purpose of attack…
 they can even detect and block malicious activities that are performed using a legitimate account, which is often the case when an attacker uses stolen credentials.
 
 Fileless malware attacks place value on stealth, rather than persistence, though the flexibility of the attack to pair with other malware allows it to have both. The Ponemon Institute survey found that these memory-based attacks were 10 times more likely to succeed than file-based malware. 
 
  And that’s a wrap. 
-Stay safe yall, this is 7root signing out.
+Stay safe yall, 7root signing out.
