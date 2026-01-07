@@ -13,14 +13,13 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: Shishir's Blog
-email: root@shishirsubedi.com.np
+title: PCT's Blog
+#email: root@0
 description: >- # this means to ignore newlines until "baseurl:"
-  I am an Infosec enthusiast. I like doing hackthebox and tryhackme challenges. I enjoy learning new stuffs. In spare time,
-  I like to watch football(soccer), different tv series and movies. 
-twitter_username: shishirsub10
-github_username: shishirsub10
-minimal_mistakes_skin: dark
+  I am an Infosec enthusiast. I like doing hackthebox and tryhackme challenges. 
+twitter_username: pct
+github_username: pct
+minimal_mistakes_skin: yellow
 search: true
 
 # Build settings
@@ -57,19 +56,19 @@ plugins:
   - jekyll-include-cache
 
 author:
-  name   : "Shishir Subedi"
-  avatar : "/assets/images/bio-photo.png"
+  name   : "PCT"
+  avatar : "/assets/images/b5cf24f912d5d0c6e4e775649a342384.jpg"
   bio    : " Infosec Enthusiast"
   links:
     - label: "Website"
       icon: "fas fa-fw fa-link"
-      url: "https://shishirsubedi.com.np"
+      url: "https://0.com"
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/shishirsub10"
+      url: "https://twitter.com/0"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "https://github.com/shishirsub10"
+      url: "https://github.com/0"
     # - label: "Instagram"
       # icon: "fab fa-fw fa-instagram"
       # url: "https://instagram.com/"
