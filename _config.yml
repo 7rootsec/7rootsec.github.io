@@ -1,29 +1,53 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely edit after that. If you find
+# yourself editing this file very often, consider using Jekyll's data files
+# feature for the data you need to update frequently.
+#
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
+
 # Site settings
-title: "PCT's Blog"
-description: >-
-  I am an Infosec enthusiast. I like doing Hack The Box and TryHackMe challenges.
-  I enjoy learning new things in my spare time.
-
-twitter_username: 7rootsec
-github_username: 7rootsec
-
-minimal_mistakes_skin: yellow
+# These are used to personalize your new site. If you look in the HTML files,
+# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
+# You can create any custom variable you would like, and they will be accessible
+# in the templates via {{ site.myvariable }}.
+title: Shishir's Blog
+email: root@shishirsubedi.com.np
+description: >- # this means to ignore newlines until "baseurl:"
+  I am an Infosec enthusiast. I like doing hackthebox and tryhackme challenges. I enjoy learning new stuffs. In spare time,
+  I like to watch football(soccer), different tv series and movies. 
+twitter_username: shishirsub10
+github_username: shishirsub10
+minimal_mistakes_skin: dark
 search: true
 
 # Build settings
 markdown: kramdown
 remote_theme: mmistakes/minimal-mistakes
-
 # Outputting
 permalink: /:categories/:title/
-paginate: 100
+paginate: 100 # amount of posts to show
 paginate_path: /page:num/
-timezone: Africa/Casablanca
+timezone: # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 include:
   - _pages
 
-# Plugins (GitHub Pages allowed)
+# Exclude from processing.
+# The following items will not be processed, by default. Create a custom list
+# to override the default setting.
+# exclude:
+#   - Gemfile
+#   - Gemfile.lock
+#   - node_modules
+#   - vendor/bundle/
+#   - vendor/cache/
+#   - vendor/gems/
+#   - vendor/ruby/
+
+# Plugins (previously gems:)
 plugins:
   - jekyll-paginate
   - jekyll-sitemap
@@ -31,37 +55,57 @@ plugins:
   - jekyll-feed
   - jemoji
   - jekyll-include-cache
-  - jekyll-seo-tag
 
-# Author
 author:
-  name   : "PCT"
-  avatar : "/assets/images/b5cf24f912d5d0c6e4e775649a342384.jpg"
-  bio    : "Infosec Enthusiast"
+  name   : "Shishir Subedi"
+  avatar : "/assets/images/bio-photo.png"
+  bio    : " Infosec Enthusiast"
   links:
+    - label: "Website"
+      icon: "fas fa-fw fa-link"
+      url: "https://shishirsubedi.com.np"
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/7rootsec"
+      url: "https://twitter.com/shishirsub10"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "https://github.com/7rootsec"
+      url: "https://github.com/shishirsub10"
+    # - label: "Instagram"
+      # icon: "fab fa-fw fa-instagram"
+      # url: "https://instagram.com/"
 
-# Defaults
+# footer:
+  # links:
+  #   - label: "Twitter"
+  #     icon: "fab fa-fw fa-twitter-square"
+  #     url: "https://twitter.com/"
+  #   - label: "GitHub"
+  #     icon: "fab fa-fw fa-github"
+  #     url: "https://github.com/"
+  #   - label: "Instagram"
+  #     icon: "fab fa-fw fa-instagram"
+  #     url: "https://instagram.com/"
+
 defaults:
-  # Posts
+  # _posts
   - scope:
       path: ""
       type: posts
     values:
       layout: single
+      author_profile: false
       read_time: true
       comments: true
       share: true
       related: true
       classes: wide
       show_date: true
-
-  # Pages
+      sidebar:
+        nav: "docs"
+      # toc: true
+      # toc_label: "My Table of Contents"
+      # toc_icon: "cog"
+  # _pages
   - scope:
       path: "_pages"
       type: pages
@@ -69,11 +113,9 @@ defaults:
       layout: single
       author_profile: true
 
-# Archives
 category_archive:
   type: liquid
   path: /categories/
-
 tag_archive:
   type: liquid
   path: /tags/
