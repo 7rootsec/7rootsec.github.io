@@ -1,3 +1,10 @@
+:root {
+  --cyber-neon-green: #00ff66;
+  --cyber-neon-green-glow: 0 0 10px rgba(0,255,102,0.4);
+  --cyber-neon-cyan: #00e5ff;
+  --cyber-neon-cyan-glow: 0 0 10px rgba(0,229,255,0.4);
+}
+
 ---
 # Only the main Sass file needs front matter (the dashes are enough)
 ---
@@ -793,6 +800,17 @@ body.crt-active::after {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .arc-post-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 12px rgba(0,255,102,0.2);
+}
+
+/* Collapsed year block */
+.arc-collapsed .arc-post-list {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
   transform: translateY(-2px);
   box-shadow: 0 0 12px rgba(0,255,102,0.2);
 }
