@@ -696,3 +696,107 @@ body.crt-active::after {
   color: rgba(0, 255, 102, 0.55);
   margin-right: 8px;
 }
+
+/* 10. Premium Archives Custom Timeline */
+.archives {
+  margin-top: 1.5rem;
+  padding-left: 5px;
+}
+
+.archives li {
+  position: relative;
+  padding-left: 24px;
+  margin-bottom: 14px;
+  list-style: none;
+}
+
+.archives li::before {
+  content: ">_";
+  position: absolute;
+  left: 0;
+  color: var(--cyber-neon-cyan);
+  font-family: 'Share Tech Mono', monospace;
+  font-weight: bold;
+  transition: transform 0.2s ease, color 0.2s ease;
+  font-size: 0.85rem;
+}
+
+.archives li:hover::before {
+  transform: translateX(4px);
+  color: var(--cyber-neon-green);
+  text-shadow: var(--cyber-neon-green-glow);
+}
+
+.archives li .date {
+  font-family: 'Share Tech Mono', monospace;
+  color: rgba(0, 255, 102, 0.75) !important;
+  margin-right: 12px;
+  font-size: 0.85rem;
+}
+
+.archives li a {
+  font-size: 0.95rem;
+  color: #e2e8f0;
+  transition: color 0.2s ease;
+}
+.archives li a:hover {
+  color: var(--cyber-neon-green);
+  text-decoration: none;
+}
+
+.archives .year {
+  font-family: 'Share Tech Mono', monospace;
+  color: var(--cyber-neon-green) !important;
+  border-bottom: 1px dashed rgba(0, 255, 102, 0.25);
+  padding-bottom: 6px;
+  margin-top: 35px;
+  margin-bottom: 18px;
+  font-size: 1.25rem;
+  letter-spacing: 2px;
+  text-shadow: 0 0 6px rgba(0, 255, 102, 0.2);
+}
+
+/* 11. Premium About Dashboard Layout */
+.about-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 1.5rem;
+}
+
+/* Timeline logs */
+.timeline-logs {
+  background: rgba(5, 7, 9, 0.7);
+  border: 1px solid rgba(0, 255, 102, 0.15);
+  border-radius: 4px;
+  padding: 12px 16px;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.timeline-log {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 8px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: #cbd5e1;
+}
+
+.timeline-log::before {
+  content: "[*]";
+  position: absolute;
+  left: 0;
+  color: var(--cyber-neon-cyan);
+}
+
+.timeline-log.success::before {
+  content: "[+]";
+  color: var(--cyber-neon-green);
+}
+
+.timeline-log .log-time {
+  color: rgba(0, 255, 102, 0.55);
+  margin-right: 8px;
+}
