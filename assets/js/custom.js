@@ -1,7 +1,7 @@
 /**
  * 7rootsec Cybersecurity Blog Custom Script
- * Adds interactive retro terminal, Matrix rain, typewriter subtitle,
- * and dynamic cybersecurity widgets.
+ * Adds interactive retro terminal, Matrix rain, Particle Node Mesh,
+ * scroll hex progress, and dynamic SecOps sidebar controls.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,10 +12,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const siteTitle = document.querySelector('.site-title a') || document.querySelector('.site-title');
   const siteSubtitle = document.querySelector('.site-subtitle');
 
-  // Apply CSS glitch class to site title
   if (siteTitle) {
     siteTitle.classList.add('glitch-hover');
   }
+
+  // Apply card brackets styles to Chirpy post cards
+  document.querySelectorAll('.post-preview, .card').forEach(card => {
+    card.classList.add('cyber-panel');
+  });
 
   // ----------------------------------------------------
   // 2. TAGLINE TYPEWRITER ANIMATION
@@ -33,7 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let isDeleting = false;
     let delay = 100;
 
-    // Create container for typing text and cursor
     siteSubtitle.innerHTML = '<span class="typewriter-text"></span><span class="typewriter-cursor"></span>';
     const textSpan = siteSubtitle.querySelector('.typewriter-text');
 
@@ -43,37 +46,34 @@ document.addEventListener('DOMContentLoaded', () => {
       if (isDeleting) {
         textSpan.textContent = currentPhrase.substring(0, charIndex - 1);
         charIndex--;
-        delay = 40; // delete faster
+        delay = 40;
       } else {
         textSpan.textContent = currentPhrase.substring(0, charIndex + 1);
         charIndex++;
-        delay = 80; // normal typing speed
+        delay = 80;
       }
 
       if (!isDeleting && charIndex === currentPhrase.length) {
         isDeleting = true;
-        delay = 2000; // pause at full text
+        delay = 2000;
       } else if (isDeleting && charIndex === 0) {
         isDeleting = false;
         phraseIndex = (phraseIndex + 1) % phrases.length;
-        delay = 500; // pause before typing next
+        delay = 500;
       }
 
       setTimeout(typeEffect, delay);
     }
 
-    // Start typewriter
     setTimeout(typeEffect, 1000);
   }
 
   // ----------------------------------------------------
-  // 3. SECURE CONNECTION SIDEBAR WIDGET
+  // 3. SECURE CONNECTION SIDEBAR WIDGET & CONTROLS
   // ----------------------------------------------------
   if (sidebar) {
-    // Generate a random-looking IP address
     const randomIP = `10.24.${Math.floor(Math.random() * 254) + 1}.${Math.floor(Math.random() * 254) + 1}`;
     
-    // Create widget elements
     const widget = document.createElement('div');
     widget.className = 'connection-widget';
     widget.innerHTML = `
@@ -97,13 +97,13 @@ document.addEventListener('DOMContentLoaded', () => {
         <span class="widget-label">Uptime:</span>
         <span class="widget-value" id="session-timer">00:00:00</span>
       </div>
-      <div class="widget-row" style="margin-top: 8px; border-top: 1px dashed rgba(0, 255, 102, 0.15); padding-top: 6px; justify-content: space-around;">
-        <a href="#" id="widget-matrix-toggle" style="color: #00ff66; text-decoration: none; border-bottom: 1px dotted; font-size: 0.68rem;">Matrix: OFF</a>
-        <a href="#" id="widget-crt-toggle" style="color: #00e5ff; text-decoration: none; border-bottom: 1px dotted; font-size: 0.68rem;">CRT: OFF</a>
+      <div class="widget-row" style="margin-top: 8px; border-top: 1px dashed rgba(0, 255, 102, 0.15); padding-top: 6px; justify-content: space-between; gap: 4px; flex-wrap: wrap;">
+        <a href="#" id="widget-matrix-toggle" style="color: rgba(0, 255, 102, 0.6); text-decoration: none; border-bottom: 1px dotted; font-size: 0.65rem;">Matrix: OFF</a>
+        <a href="#" id="widget-nodes-toggle" style="color: rgba(0, 255, 102, 0.6); text-decoration: none; border-bottom: 1px dotted; font-size: 0.65rem;">Nodes: OFF</a>
+        <a href="#" id="widget-crt-toggle" style="color: rgba(0, 229, 255, 0.6); text-decoration: none; border-bottom: 1px dotted; font-size: 0.65rem;">CRT: OFF</a>
       </div>
     `;
 
-    // Insert into sidebar after the profile block
     const profileWrapper = sidebar.querySelector('.profile-wrapper') || sidebar.firstElementChild;
     if (profileWrapper) {
       profileWrapper.parentNode.insertBefore(widget, profileWrapper.nextSibling);
@@ -111,7 +111,6 @@ document.addEventListener('DOMContentLoaded', () => {
       sidebar.appendChild(widget);
     }
 
-    // Uptime session counter
     let seconds = 0;
     setInterval(() => {
       seconds++;
@@ -126,105 +125,255 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ----------------------------------------------------
-  // 4. MATRIX RAIN EFFECT CANVAS
+  // 4. SCROLL PROGRESS INDICATOR (HEX VALUE)
+  // ----------------------------------------------------
+  const progressContainer = document.createElement('div');
+  progressContainer.id = 'scroll-progress-container';
+  progressContainer.innerHTML = `<div id="scroll-progress-bar"></div>`;
+  
+  const progressText = document.createElement('div');
+  progressText.id = 'scroll-progress-text';
+  progressText.textContent = '[PROGRESS: 0x00/0xFF]';
+  
+  document.body.appendChild(progressContainer);
+  document.body.appendChild(progressText);
+
+  const progressBar = document.getElementById('scroll-progress-bar');
+
+  window.addEventListener('scroll', () => {
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    if (docHeight <= 0) {
+      progressBar.style.width = '0%';
+      progressText.textContent = '[PROGRESS: 0x00/0xFF]';
+      return;
+    }
+    const scrollPercent = (window.scrollY / docHeight) * 100;
+    progressBar.style.width = `${scrollPercent}%`;
+
+    // Map 0-100% to 0-255 (0x00 - 0xFF)
+    const hexVal = Math.round(scrollPercent * 2.55).toString(16).toUpperCase().padStart(2, '0');
+    progressText.textContent = `[PROGRESS: 0x${hexVal}/0xFF]`;
+  });
+
+  // ----------------------------------------------------
+  // 5. MATRIX & NODES BACKGROUND CANVAS GENERATORS
   // ----------------------------------------------------
   const canvas = document.createElement('canvas');
   canvas.id = 'matrix-canvas';
   document.body.appendChild(canvas);
   const ctx = canvas.getContext('2d');
 
+  let canvasMode = 'none'; // 'none' | 'matrix' | 'nodes'
+  let canvasAnimationId = null;
+
+  // Matrix variables
   let columns = 0;
   let drops = [];
-  const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ01010101/*-+=%';
+  const matrixChars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ01010101/*-+=%';
   const fontSize = 14;
-  let matrixAnimationId = null;
+
+  // Nodes variables
+  let particles = [];
+  const maxParticles = 60;
+  let mouse = { x: null, y: null };
+
+  window.addEventListener('mousemove', (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+
+  window.addEventListener('mouseout', () => {
+    mouse.x = null;
+    mouse.y = null;
+  });
+
+  class Particle {
+    constructor() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.vx = (Math.random() - 0.5) * 0.8;
+      this.vy = (Math.random() - 0.5) * 0.8;
+      this.radius = Math.random() * 2 + 1;
+    }
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+
+      if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+      if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+
+      // Mouse interaction (slight push away)
+      if (mouse.x !== null && mouse.y !== null) {
+        const dx = mouse.x - this.x;
+        const dy = mouse.y - this.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 100) {
+          const force = (100 - dist) / 100;
+          this.x -= (dx / dist) * force * 2;
+          this.y -= (dy / dist) * force * 2;
+        }
+      }
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fillStyle = '#00ff66';
+      ctx.fill();
+    }
+  }
 
   function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    
+    // Reset Matrix
     columns = Math.floor(canvas.width / fontSize);
     drops = Array(columns).fill(1);
+
+    // Reset Nodes
+    particles = [];
+    for (let i = 0; i < maxParticles; i++) {
+      particles.push(new Particle());
+    }
   }
 
-  function drawMatrix() {
-    ctx.fillStyle = 'rgba(13, 15, 18, 0.08)'; // trails
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  function loop() {
+    if (canvasMode === 'matrix') {
+      ctx.fillStyle = 'rgba(12, 14, 18, 0.08)'; // trails
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    ctx.fillStyle = '#00ff66';
-    ctx.font = `${fontSize}px 'Share Tech Mono', monospace`;
+      ctx.fillStyle = '#00ff66';
+      ctx.font = `${fontSize}px 'Share Tech Mono', monospace`;
 
-    for (let i = 0; i < drops.length; i++) {
-      const text = chars.charAt(Math.floor(Math.random() * chars.length));
-      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+      for (let i = 0; i < drops.length; i++) {
+        const text = matrixChars.charAt(Math.floor(Math.random() * matrixChars.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
-      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-        drops[i] = 0;
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
       }
-      drops[i]++;
+    } else if (canvasMode === 'nodes') {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Update & Draw particles
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+
+      // Draw connections
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < 110) {
+            const alpha = (110 - dist) / 110 * 0.15;
+            ctx.strokeStyle = `rgba(0, 255, 102, ${alpha})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Draw connections to mouse
+      if (mouse.x !== null && mouse.y !== null) {
+        particles.forEach(p => {
+          const dx = mouse.x - p.x;
+          const dy = mouse.y - p.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < 130) {
+            const alpha = (130 - dist) / 130 * 0.22;
+            ctx.strokeStyle = `rgba(0, 229, 255, ${alpha})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(mouse.x, mouse.y);
+            ctx.lineTo(p.x, p.y);
+            ctx.stroke();
+          }
+        });
+      }
     }
-    matrixAnimationId = requestAnimationFrame(drawMatrix);
+
+    canvasAnimationId = requestAnimationFrame(loop);
   }
 
-  function startMatrix() {
-    if (!matrixAnimationId) {
-      resizeCanvas();
-      drawMatrix();
-      document.body.classList.add('matrix-active');
-      updateMatrixToggleText(true);
+  function startCanvasEffect(mode) {
+    if (canvasAnimationId) {
+      cancelAnimationFrame(canvasAnimationId);
+      canvasAnimationId = null;
     }
-  }
-
-  function stopMatrix() {
-    if (matrixAnimationId) {
-      cancelAnimationFrame(matrixAnimationId);
-      matrixAnimationId = null;
+    
+    canvasMode = mode;
+    
+    if (mode === 'none') {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       document.body.classList.remove('matrix-active');
-      updateMatrixToggleText(false);
+      updateCanvasToggleTexts();
+      return;
     }
+
+    resizeCanvas();
+    document.body.classList.add('matrix-active'); // makes canvas container visible
+    loop();
+    updateCanvasToggleTexts();
   }
 
-  function toggleMatrix() {
-    const isActive = document.body.classList.contains('matrix-active');
-    if (isActive) {
-      stopMatrix();
-      localStorage.setItem('matrix-active', 'false');
-    } else {
-      startMatrix();
-      localStorage.setItem('matrix-active', 'true');
-    }
-  }
+  function updateCanvasToggleTexts() {
+    const matrixBtn = document.getElementById('widget-matrix-toggle');
+    const nodesBtn = document.getElementById('widget-nodes-toggle');
 
-  function updateMatrixToggleText(active) {
-    const toggleLink = document.getElementById('widget-matrix-toggle');
-    if (toggleLink) {
-      toggleLink.textContent = active ? 'Matrix: ON' : 'Matrix: OFF';
-      toggleLink.style.color = active ? '#00ff66' : 'rgba(0, 255, 102, 0.6)';
+    if (matrixBtn) {
+      const active = canvasMode === 'matrix';
+      matrixBtn.textContent = active ? 'Matrix: ON' : 'Matrix: OFF';
+      matrixBtn.style.color = active ? '#00ff66' : 'rgba(0, 255, 102, 0.6)';
+    }
+
+    if (nodesBtn) {
+      const active = canvasMode === 'nodes';
+      nodesBtn.textContent = active ? 'Nodes: ON' : 'Nodes: OFF';
+      nodesBtn.style.color = active ? '#00ff66' : 'rgba(0, 255, 102, 0.6)';
     }
   }
 
   window.addEventListener('resize', () => {
-    if (matrixAnimationId) {
+    if (canvasMode !== 'none') {
       resizeCanvas();
     }
   });
 
-  // Load user matrix preference
-  const localMatrixPref = localStorage.getItem('matrix-active');
-  if (localMatrixPref === 'true') {
-    startMatrix();
-  }
-
-  // Bind widget toggle click
+  // Handle widget toggle clicks
   document.addEventListener('click', (e) => {
-    if (e.target && e.target.id === 'widget-matrix-toggle') {
+    if (!e.target) return;
+    if (e.target.id === 'widget-matrix-toggle') {
       e.preventDefault();
-      toggleMatrix();
+      const nextMode = canvasMode === 'matrix' ? 'none' : 'matrix';
+      startCanvasEffect(nextMode);
+      localStorage.setItem('canvas-mode', nextMode);
+    }
+    if (e.target.id === 'widget-nodes-toggle') {
+      e.preventDefault();
+      const nextMode = canvasMode === 'nodes' ? 'none' : 'nodes';
+      startCanvasEffect(nextMode);
+      localStorage.setItem('canvas-mode', nextMode);
     }
   });
 
+  // Load canvas mode preference
+  const localCanvasMode = localStorage.getItem('canvas-mode') || 'none';
+  if (localCanvasMode !== 'none') {
+    startCanvasEffect(localCanvasMode);
+  }
+
   // ----------------------------------------------------
-  // 5. CRT RETRO SCANLINES
+  // 6. CRT MONITOR RETRO SIMULATOR
   // ----------------------------------------------------
   function toggleCRT() {
     const isCrt = document.body.classList.contains('crt-active');
@@ -247,7 +396,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Load user CRT preference
   if (localStorage.getItem('crt-active') === 'true') {
     document.body.classList.add('crt-active');
     setTimeout(() => {
@@ -267,9 +415,23 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ----------------------------------------------------
-  // 6. INTERACTIVE FLOATING TERMINAL OVERLAY
+  // 7. SKILLS LOADING BAR ANIMATION (ABOUT PAGE)
   // ----------------------------------------------------
-  // Construct terminal elements dynamically
+  function loadSkillsMeters() {
+    const fills = document.querySelectorAll('.meter-fill');
+    setTimeout(() => {
+      fills.forEach(fill => {
+        const targetWidth = fill.getAttribute('data-width') || '0%';
+        fill.style.width = targetWidth;
+      });
+    }, 450);
+  }
+  
+  loadSkillsMeters();
+
+  // ----------------------------------------------------
+  // 8. INTERACTIVE DRAGGABLE FLOATING TERMINAL OVERLAY
+  // ----------------------------------------------------
   const termContainer = document.createElement('div');
   termContainer.className = 'cyber-terminal minimized';
   termContainer.id = 'cyber-terminal';
@@ -308,14 +470,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const input = document.getElementById('terminal-input');
   const body = document.getElementById('terminal-body');
   
-  // Open terminal
   trigger.addEventListener('click', () => {
     term.classList.remove('minimized');
     trigger.classList.add('active');
     input.focus();
   });
 
-  // Close / Minimize terminal
   document.getElementById('term-close-btn').addEventListener('click', () => {
     term.classList.add('minimized');
     trigger.classList.remove('active');
@@ -326,7 +486,6 @@ document.addEventListener('DOMContentLoaded', () => {
     trigger.classList.remove('active');
   });
 
-  // Expand / Maximize size
   let isExpanded = false;
   document.getElementById('term-max-btn').addEventListener('click', () => {
     if (!isExpanded) {
@@ -340,14 +499,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Terminal drag functionality
   const header = document.getElementById('terminal-header');
   let isDragging = false;
   let offsetX = 0;
   let offsetY = 0;
 
   header.addEventListener('mousedown', (e) => {
-    if (e.target.classList.contains('control-dot')) return; // ignore control button clicks
+    if (e.target.classList.contains('control-dot')) return;
     isDragging = true;
     offsetX = e.clientX - term.offsetLeft;
     offsetY = e.clientY - term.offsetTop;
@@ -360,7 +518,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let x = e.clientX - offsetX;
     let y = e.clientY - offsetY;
 
-    // Viewport constraints
     const maxX = window.innerWidth - term.offsetWidth - 10;
     const maxY = window.innerHeight - term.offsetHeight - 10;
 
@@ -378,7 +535,6 @@ document.addEventListener('DOMContentLoaded', () => {
     header.style.cursor = '';
   });
 
-  // Handle touch events for mobile draggability
   header.addEventListener('touchstart', (e) => {
     if (e.target.classList.contains('control-dot')) return;
     const touch = e.touches[0];
@@ -410,7 +566,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ----------------------------------------------------
-  // 7. SHELL COMMAND INTERPRETER LOGIC
+  // 9. SHELL COMMAND INTERPRETER LOGIC
   // ----------------------------------------------------
   function addTermLine(text, type = '') {
     const line = document.createElement('div');
@@ -420,7 +576,6 @@ document.addEventListener('DOMContentLoaded', () => {
     body.scrollTop = body.scrollHeight;
   }
 
-  // Preloaded posts fallback list
   const fallbackPosts = [
     "2026-05-24: IoT Botnet Analysis & C2 Infrastructure Study",
     "2025-12-02: Fileless Malware Internals & Process Hollowing Techniques",
@@ -435,7 +590,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const trimmed = cmdText.trim();
     if (!trimmed) return;
 
-    // Print command entered
     addTermLine(`guest@7rootsec:~$ ${trimmed}`, 'command');
 
     const parts = trimmed.split(' ');
@@ -445,10 +599,11 @@ document.addEventListener('DOMContentLoaded', () => {
     switch (command) {
       case 'help':
         addTermLine('Available tools & actions:', 'success');
-        addTermLine('  about       - Displays information about 7rootsec security experience');
+        addTermLine('  about       - Displays details about 7rootsec experience');
         addTermLine('  posts       - Lists published blog writeups');
         addTermLine('  status      - Checks simulated firewall logs and system metrics');
         addTermLine('  matrix      - Toggle high-performance Matrix code rain waterfall');
+        addTermLine('  nodes       - Toggle interactive network nodes floating mesh');
         addTermLine('  crt         - Toggle retro scanlines monitor layer');
         addTermLine('  hack [ip]   - Run a simulated SecOps penetration sequence on target');
         addTermLine('  clear       - Clears shell history');
@@ -470,7 +625,6 @@ document.addEventListener('DOMContentLoaded', () => {
       case 'posts':
         addTermLine('Listing published writeups...', 'success');
         
-        // Scan the active site DOM for posts if available, fallback otherwise
         const foundPosts = [];
         document.querySelectorAll('.post-preview, h1 a, h2 a').forEach(el => {
           const txt = el.textContent.trim();
@@ -496,9 +650,17 @@ document.addEventListener('DOMContentLoaded', () => {
         break;
 
       case 'matrix':
-        toggleMatrix();
-        const matrixActive = document.body.classList.contains('matrix-active');
-        addTermLine(`Matrix Rain Canvas: ${matrixActive ? 'ENABLED' : 'DISABLED'}`, 'success');
+        const nextMode = canvasMode === 'matrix' ? 'none' : 'matrix';
+        startCanvasEffect(nextMode);
+        localStorage.setItem('canvas-mode', nextMode);
+        addTermLine(`Matrix Rain Canvas: ${nextMode === 'matrix' ? 'ENABLED' : 'DISABLED'}`, 'success');
+        break;
+
+      case 'nodes':
+        const nextModeNodes = canvasMode === 'nodes' ? 'none' : 'nodes';
+        startCanvasEffect(nextModeNodes);
+        localStorage.setItem('canvas-mode', nextModeNodes);
+        addTermLine(`Particle Nodes Canvas: ${nextModeNodes === 'nodes' ? 'ENABLED' : 'DISABLED'}`, 'success');
         break;
 
       case 'crt':
@@ -526,7 +688,7 @@ document.addEventListener('DOMContentLoaded', () => {
             `======================================================`
           ];
 
-          input.disabled = true; // disable input while hacking
+          input.disabled = true;
           let stepIndex = 0;
 
           function runHackStep() {
@@ -552,7 +714,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Handle enter key inside input
   input.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
       const val = input.value;
@@ -561,7 +722,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Shortkey toggle (Ctrl + ` or Ctrl + ~)
   document.addEventListener('keydown', (e) => {
     if (e.ctrlKey && e.key === '`') {
       e.preventDefault();
