@@ -803,16 +803,12 @@ body.crt-active::after {
   transform: translateY(-2px);
   box-shadow: 0 0 12px rgba(0,255,102,0.2);
 }
-
 /* Collapsed year block */
 .arc-collapsed .arc-post-list {
   max-height: 0;
   opacity: 0;
   overflow: hidden;
   transition: max-height 0.3s ease, opacity 0.3s ease;
-}
-  transform: translateY(-2px);
-  box-shadow: 0 0 12px rgba(0,255,102,0.2);
 }
 .arc-post-meta-row {
   display: flex;
