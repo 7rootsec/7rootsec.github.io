@@ -72,7 +72,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // 3. SECURE CONNECTION SIDEBAR WIDGET & CONTROLS
   // ----------------------------------------------------
   if (sidebar) {
-    const randomIP = `10.24.${Math.floor(Math.random() * 254) + 1}.${Math.floor(Math.random() * 254) + 1}`;
+    let tunnelIP = sessionStorage.getItem('secops-tunnel-ip');
+    if (!tunnelIP) {
+      tunnelIP = `10.24.${Math.floor(Math.random() * 254) + 1}.${Math.floor(Math.random() * 254) + 1}`;
+      sessionStorage.setItem('secops-tunnel-ip', tunnelIP);
+    }
     
     const widget = document.createElement('div');
     widget.className = 'connection-widget';
@@ -87,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
       <div class="widget-row">
         <span class="widget-label">Tunnel IP:</span>
-        <span class="widget-value">${randomIP}</span>
+        <span class="widget-value">${tunnelIP}</span>
       </div>
       <div class="widget-row">
         <span class="widget-label">Proxy Node:</span>
@@ -111,9 +115,14 @@ document.addEventListener('DOMContentLoaded', () => {
       sidebar.appendChild(widget);
     }
 
-    let seconds = 0;
+    let startTime = sessionStorage.getItem('secops-start-time');
+    if (!startTime) {
+      startTime = Date.now();
+      sessionStorage.setItem('secops-start-time', startTime);
+    }
+
     setInterval(() => {
-      seconds++;
+      const seconds = Math.floor((Date.now() - parseInt(startTime)) / 1000);
       const hrs = String(Math.floor(seconds / 3600)).padStart(2, '0');
       const mins = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
       const secs = String(seconds % 60).padStart(2, '0');
