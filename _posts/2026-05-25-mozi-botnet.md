@@ -13,6 +13,8 @@ author_profile: false
 ### The Decentralized Ghost: A Technical Deep Dive into the Mozi IoT Botnet
 **By: 7root**
 
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/45b168be-ef10-4576-9b10-1cb49b39f8df" />
+
 The Internet of Things (IoT) landscape has seen many threats, but few have matched the resilience and scale of the **Mozi botnet**. Emerging in late 2019, Mozi quickly surpassed its predecessor, Mirai, to account for nearly **90% of all observed IoT network traffic** during its peak. What made Mozi uniquely dangerous was its total abandonment of centralized command-and-control (C2) servers in favor of a self-sustaining, peer-to-peer (P2P) architecture based on the **Distributed Hash Table (DHT)** protocol.
 
 #### 1. Initial Access: The Multi-Vector Injection
