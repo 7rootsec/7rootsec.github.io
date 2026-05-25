@@ -114,15 +114,11 @@ layout: default
 
       <ul class="arc-post-list">
         {% for post in year_group.items %}
-        {% assign post_cats_lower = "" | split: "" %}
-        {% for c in post.categories %}
-          {% assign post_cats_lower = post_cats_lower | push: c | join: ',' | downcase | split: ',' %}
-        {% endfor %}
         <li class="arc-post-item"
-            data-title="{{ post.title | downcase }}"
-            data-cats="{{ post.categories | join: ' ' | downcase }}"
-            data-tags="{{ post.tags | join: ' ' | downcase }}"
-            data-filter-key="{{ post.categories | join: ',' | downcase | replace: ' ', '-' | replace: ',', ' ' }}">
+            data-title="{{ post.title | escape | downcase }}"
+            data-cats="{{ post.categories | join: ' ' | escape | downcase }}"
+            data-tags="{{ post.tags | join: ' ' | escape | downcase }}"
+            data-filter-key="{{ post.categories | join: ',' | downcase | replace: ' ', '-' | replace: ',', ' ' | escape }}">
 
           <div class="arc-post-connector">
             <div class="arc-connector-line"></div>
