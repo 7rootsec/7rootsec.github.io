@@ -33,7 +33,8 @@ Mozi recruits its "zombie army" through two primary methods: brute-forcing and v
 | **Netgear R7000/R6400** | Netgear Routers (Command Injection) | Various |
 | **MVPower DVR** | MVPower DVR (JAWS Webserver) | Various |
 
-> **[PHOTO PLACEHOLDER 1: Visualization of Centralized C2 vs. Mozi’s P2P DHT Mesh Architecture]**
+<img width="1408" height="768" alt="Gemini_Generated_Image_dqom81dqom81dqom-clean" src="https://github.com/user-attachments/assets/d8a9c2f8-f384-4303-9577-5ef03c4aba15" />
+
 > *Description: This image would contrast a standard botnet (all bots connecting to one central server) with Mozi's decentralized mesh, where every bot acts as a node in a self-healing network.*
 
 #### 2. The Backbone: Custom Extended DHT
@@ -60,7 +61,8 @@ Once a device is infected, Mozi employs several layers of obfuscation to stay hi
 | **[idp]** | Subtask | Report bot metadata (IP, Port, CPU, Gateway) back to operators |
 | **[hp]** | Control | Define the DHT node hash ID prefix |
 
-> **[PHOTO PLACEHOLDER 2: The Mozi Infection Lifecycle]**
+![Uploading Gemini_Generated_Image_l2g3h8l2g3h8l2g3 (1).png…]()
+
 > *Description: A flow chart showing the stages: 1. Internet-wide scanning -> 2. Vulnerability/Brute-force exploit -> 3. Loader execution -> 4. Joining the DHT mesh -> 5. Receiving signed configuration updates.*
 
 #### 4. Host Persistence Strategies
