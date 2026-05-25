@@ -61,7 +61,8 @@ Once a device is infected, Mozi employs several layers of obfuscation to stay hi
 | **[idp]** | Subtask | Report bot metadata (IP, Port, CPU, Gateway) back to operators |
 | **[hp]** | Control | Define the DHT node hash ID prefix |
 
-![Uploading Gemini_Generated_Image_l2g3h8l2g3h8l2g3 (1).png…]()
+<img width="1376" height="768" alt="Gemini_Generated_Image_l2g3h8l2g3h8l2g3 (1)" src="https://github.com/user-attachments/assets/2f9a5118-771e-4a7f-9c59-a70571c77a39" />
+
 
 > *Description: A flow chart showing the stages: 1. Internet-wide scanning -> 2. Vulnerability/Brute-force exploit -> 3. Loader execution -> 4. Joining the DHT mesh -> 5. Receiving signed configuration updates.*
 
