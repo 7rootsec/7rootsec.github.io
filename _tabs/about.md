@@ -4,142 +4,305 @@ icon: fas fa-info-circle
 order: 4
 ---
 
-<div class="about-dashboard">
-
-  <!-- 1. Operator Info & Radar Profile Picture -->
-  <div class="profile-header cyber-panel">
-    <div class="radar-container">
-      <img src="{{ site.avatar | relative_url }}" alt="7rootsec Avatar">
-    </div>
-    <div class="profile-meta">
-      <h2 style="font-family: 'Share Tech Mono', monospace; color: var(--cyber-neon-green); margin-bottom: 8px;">OPERATOR: 7ROOTSEC</h2>
-      <span class="cyber-status-text">STATUS: ACTIVE // OFFENSIVE SECURITY DEPLOYED</span>
-      <table style="font-family: 'Share Tech Mono', monospace; font-size: 0.8rem; width: 100%; border: none; margin-top: 10px;">
-        <tr style="background: transparent;">
-          <td style="padding: 2px 0; font-weight: bold; color: var(--cyber-neon-cyan);">Classification:</td>
-          <td style="padding: 2px 0; color: #fff;">L4 Security Engineer</td>
-        </tr>
-        <tr style="background: transparent;">
-          <td style="padding: 2px 0; font-weight: bold; color: var(--cyber-neon-cyan);">Core Focus:</td>
-          <td style="padding: 2px 0; color: #fff;">IoT Exploitation, Web & Active Directory Hardening</td>
-        </tr>
-        <tr style="background: transparent;">
-          <td style="padding: 2px 0; font-weight: bold; color: var(--cyber-neon-cyan);">Operational Exp:</td>
-          <td style="padding: 2px 0; color: #fff;">4+ Years in Threat Defense & Adversary Simulation</td>
-        </tr>
-      </table>
-    </div>
+<div class="dossier-wrapper">
+  <div class="dossier-header">
+    <div class="classification-stamp">TOP SECRET // NOFORN</div>
+    <div class="dossier-title">OPERATOR DOSSIER: 7ROOTSEC</div>
+    <div class="dossier-id">ID: 0x7R00T // CLEARANCE: L4</div>
   </div>
 
-  <!-- 2. Profile Summary -->
-  <div class="cyber-panel" style="padding: 15px; font-family: 'Share Tech Mono', monospace; font-size: 0.85rem; line-height: 1.5;">
-    <div style="border-bottom: 1px dashed rgba(0, 255, 102, 0.25); padding-bottom: 6px; margin-bottom: 10px; font-weight: bold; color: var(--cyber-neon-green); text-transform: uppercase;">
-      // Executive Mission Summary
+  <div class="dossier-body">
+    <div class="profile-section">
+      <div class="avatar-container">
+        <div class="scanner-line"></div>
+        <img src="{{ site.avatar | relative_url }}" alt="7rootsec Avatar" class="target-img">
+        <div class="crosshair">
+          <div class="hline"></div>
+          <div class="vline"></div>
+        </div>
+      </div>
+      <div class="intel-data">
+        <table class="intel-table">
+          <tr><td class="label">ALIAS:</td><td class="value highlight">7ROOTSEC</td></tr>
+          <tr><td class="label">STATUS:</td><td class="value">ACTIVE_DEPLOYMENT</td></tr>
+          <tr><td class="label">ROLE:</td><td class="value">Offensive Security Engineer</td></tr>
+          <tr><td class="label">SPECIALTY:</td><td class="value">IoT Exploitation, Web Hacking</td></tr>
+          <tr><td class="label">LOCATION:</td><td class="value">[REDACTED]</td></tr>
+        </table>
+      </div>
     </div>
-    Cybersecurity professional with a strong track record of identifying, analyzing, and mitigating complex security vulnerabilities in web applications, APIs, and distributed systems (including OWASP Top 10 risks, business logic flaws, and advanced exploitation chains). Highly experienced in network security, system hardening, and Windows internals, working inside security operations and penetration testing teams to reduce attack surfaces at scale.
-  </div>
 
-  <!-- 3. Core Specialties (Skill Progress Bars) -->
-  <div class="cyber-panel">
-    <div style="border-bottom: 1px dashed rgba(0, 255, 102, 0.25); padding-bottom: 6px; margin-bottom: 12px; font-family: 'Share Tech Mono', monospace; font-weight: bold; color: var(--cyber-neon-green); text-transform: uppercase;">
-      // Skill Matrix Loading...
+    <div class="data-panel">
+      <h3 class="panel-title">>_ EXECUTIVE SUMMARY</h3>
+      <div class="panel-content type-text">
+        Subject is a highly skilled cybersecurity professional specializing in identifying and exploiting complex vulnerabilities in web applications, APIs, and distributed systems. 
+        <br><br>
+        Extensive background in <span class="redacted">Network Security</span> and <span class="redacted">System Hardening</span>. Operates globally in Threat Defense and Adversary Simulation.
+      </div>
     </div>
-    <div class="skills-container">
-      <div class="cyber-meter">
-        <div class="meter-label">
-          <span>Web & API Penetration Testing</span>
-          <span>90%</span>
+
+    <div class="data-panel">
+      <h3 class="panel-title">>_ EXPLOIT MODULES & SKILL MATRIX</h3>
+      <div class="skills-grid">
+        <div class="skill-item">
+          <span class="skill-name">WEB_API_PENTESTING</span>
+          <div class="progress-bar"><div class="fill" style="width: 90%;"></div></div>
         </div>
-        <div class="meter-track">
-          <div class="meter-fill" data-width="90%"></div>
+        <div class="skill-item">
+          <span class="skill-name">IOT_HARDWARE_EXPLOIT</span>
+          <div class="progress-bar"><div class="fill" style="width: 85%;"></div></div>
         </div>
-      </div>
-      <div class="cyber-meter">
-        <div class="meter-label">
-          <span>IoT & Hardware Exploitation</span>
-          <span>85%</span>
+        <div class="skill-item">
+          <span class="skill-name">WINDOWS_INTERNALS</span>
+          <div class="progress-bar"><div class="fill" style="width: 80%;"></div></div>
         </div>
-        <div class="meter-track">
-          <div class="meter-fill" data-width="85%"></div>
-        </div>
-      </div>
-      <div class="cyber-meter">
-        <div class="meter-label">
-          <span>Windows Internals & Privilege Escalation</span>
-          <span>80%</span>
-        </div>
-        <div class="meter-track">
-          <div class="meter-fill" data-width="80%"></div>
+        <div class="skill-item">
+          <span class="skill-name">SEC_AUTOMATION</span>
+          <div class="progress-bar"><div class="fill" style="width: 85%;"></div></div>
         </div>
       </div>
-      <div class="cyber-meter">
-        <div class="meter-label">
-          <span>Security Automation (Python/Bash)</span>
-          <span>85%</span>
-        </div>
-        <div class="meter-track">
-          <div class="meter-fill" data-width="85%"></div>
-        </div>
+    </div>
+
+    <div class="data-panel">
+      <h3 class="panel-title">>_ KNOWN ARSENAL</h3>
+      <div class="arsenal-tags">
+        <span class="cyber-tag">Burp Suite Pro</span>
+        <span class="cyber-tag">Nmap</span>
+        <span class="cyber-tag">Wireshark</span>
+        <span class="cyber-tag">Metasploit</span>
+        <span class="cyber-tag">Python Scripting</span>
+        <span class="cyber-tag">Ghidra</span>
       </div>
     </div>
   </div>
-
-  <!-- 4. The Arsenal (Tools Grid) -->
-  <div class="cyber-panel">
-    <div style="border-bottom: 1px dashed rgba(0, 255, 102, 0.25); padding-bottom: 6px; margin-bottom: 12px; font-family: 'Share Tech Mono', monospace; font-weight: bold; color: var(--cyber-neon-green); text-transform: uppercase;">
-      // System Toolkit & Arsenal
-    </div>
-    <div class="tools-grid">
-      <div class="tool-card">
-        <i class="fas fa-spider"></i>
-        <span class="tool-name">Burp Suite Pro</span>
-      </div>
-      <div class="tool-card">
-        <i class="fas fa-radar"></i>
-        <span class="tool-name">Nmap / Masscan</span>
-      </div>
-      <div class="tool-card">
-        <i class="fas fa-project-diagram"></i>
-        <span class="tool-name">Wireshark</span>
-      </div>
-      <div class="tool-card">
-        <i class="fas fa-skull"></i>
-        <span class="tool-name">Metasploit</span>
-      </div>
-      <div class="tool-card">
-        <i class="fas fa-search-plus"></i>
-        <span class="tool-name">ffuf / Gobuster</span>
-      </div>
-      <div class="tool-card">
-        <i class="fab fa-python"></i>
-        <span class="tool-name">Custom Python</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- 5. Operational Feed (Experience Timeline) -->
-  <div class="cyber-panel">
-    <div style="border-bottom: 1px dashed rgba(0, 255, 102, 0.25); padding-bottom: 6px; margin-bottom: 12px; font-family: 'Share Tech Mono', monospace; font-weight: bold; color: var(--cyber-neon-green); text-transform: uppercase;">
-      // Historical Operation Logs
-    </div>
-    <div class="timeline-logs">
-      <div class="timeline-log success">
-        <span class="log-time">[2022 - PRESENT]</span>
-        Penetration Testing Specialist - Led Web & AD infrastructure assessments, resolving over 120 critical findings.
-      </div>
-      <div class="timeline-log success">
-        <span class="log-time">[2020 - 2022]</span>
-        Security Analyst - Handled SOC operations, incident response, network forensic traffic investigations, and log audits.
-      </div>
-      <div class="timeline-log">
-        <span class="log-time">[2019 - 2020]</span>
-        Systems & Security Engineer - Configured production firewalls, hardended server kernels, and set up network protocols.
-      </div>
-      <div class="timeline-log">
-        <span class="log-time">[Threat Intel Feed]</span>
-        Ongoing adversary simulation threat research, CVE analysis, and writeup publications on TryHackMe/HackTheBox.
-      </div>
-    </div>
-  </div>
-
 </div>
+
+<style>
+.dossier-wrapper {
+  background: #0f111a;
+  border: 1px solid #333;
+  padding: 20px;
+  font-family: 'Share Tech Mono', 'Courier New', Courier, monospace;
+  color: #c5c8c6;
+  position: relative;
+  overflow: hidden;
+  margin-top: 2rem;
+}
+
+.dossier-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  z-index: 10;
+}
+
+.dossier-header {
+  border-bottom: 2px solid #ff4444;
+  padding-bottom: 15px;
+  margin-bottom: 25px;
+  text-align: center;
+  position: relative;
+}
+
+.classification-stamp {
+  color: #ff4444;
+  font-weight: bold;
+  font-size: 1.5rem;
+  letter-spacing: 5px;
+  border: 2px solid #ff4444;
+  display: inline-block;
+  padding: 5px 15px;
+  transform: rotate(-5deg);
+  opacity: 0.8;
+  position: absolute;
+  top: -10px;
+  right: 10px;
+}
+
+.dossier-title {
+  font-size: 1.8rem;
+  color: #fff;
+  letter-spacing: 2px;
+  margin-top: 20px;
+}
+
+.dossier-id {
+  color: #888;
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+.profile-section {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+@media (max-width: 600px) {
+  .profile-section {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.avatar-container {
+  width: 180px;
+  height: 180px;
+  position: relative;
+  border: 1px solid var(--cyber-neon-green);
+  overflow: hidden;
+  background: rgba(0, 255, 102, 0.05);
+}
+
+.target-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%) contrast(120%);
+  opacity: 0.8;
+}
+
+.scanner-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--cyber-neon-green);
+  box-shadow: 0 0 10px var(--cyber-neon-green);
+  animation: scan 3s infinite linear;
+  z-index: 5;
+}
+
+@keyframes scan {
+  0% { top: 0; }
+  50% { top: 100%; }
+  100% { top: 0; }
+}
+
+.crosshair {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px; height: 50px;
+  z-index: 6;
+}
+
+.crosshair .hline {
+  width: 100%; height: 1px; background: rgba(0,255,102,0.5); position: absolute; top: 50%; left: 0;
+}
+
+.crosshair .vline {
+  width: 1px; height: 100%; background: rgba(0,255,102,0.5); position: absolute; top: 0; left: 50%;
+}
+
+.intel-data {
+  flex: 1;
+}
+
+.intel-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.intel-table td {
+  padding: 8px 0;
+  border-bottom: 1px dashed #333;
+}
+
+.intel-table .label {
+  color: #888;
+  width: 120px;
+}
+
+.intel-table .value {
+  color: #ddd;
+}
+
+.intel-table .value.highlight {
+  color: var(--cyber-neon-green);
+  font-weight: bold;
+}
+
+.data-panel {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid #333;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.panel-title {
+  color: var(--cyber-neon-cyan);
+  font-size: 1.1rem;
+  margin-top: 0;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #333;
+  padding-bottom: 5px;
+}
+
+.redacted {
+  background-color: #fff;
+  color: #fff;
+  padding: 0 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.redacted:hover {
+  background-color: transparent;
+  color: #ff4444;
+}
+
+.skills-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skill-item {
+  display: flex;
+  align-items: center;
+}
+
+.skill-name {
+  width: 180px;
+  font-size: 0.85rem;
+  color: #aaa;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 8px;
+  background: #222;
+  border: 1px solid #444;
+}
+
+.progress-bar .fill {
+  height: 100%;
+  background: var(--cyber-neon-green);
+  box-shadow: 0 0 5px var(--cyber-neon-green);
+}
+
+.arsenal-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.cyber-tag {
+  background: rgba(0, 229, 255, 0.1);
+  color: var(--cyber-neon-cyan);
+  border: 1px solid var(--cyber-neon-cyan);
+  padding: 5px 10px;
+  font-size: 0.8rem;
+  border-radius: 2px;
+}
+</style>

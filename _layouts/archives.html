@@ -2,414 +2,205 @@
 layout: default
 ---
 
-<div class="arc-wrapper">
-
-  <!-- ===== HEADER HERO ===== -->
-  <header class="arc-hero">
-    <div class="arc-hero-grid-lines" aria-hidden="true"></div>
-    <div class="arc-hero-inner">
-      <div class="arc-hero-badge">
-        <span class="arc-badge-dot"></span>
-        <span class="arc-badge-text">INDEXING COMPLETE</span>
-      </div>
-      <h1 class="arc-hero-title">
-        <span class="arc-title-prefix">[</span>
-        <span class="arc-title-main">ARCHIVE</span>
-        <span class="arc-title-suffix">]</span>
-      </h1>
-      <p class="arc-hero-sub">Declassified writeups &amp; security research logs</p>
-
-      <!-- Animated stat counters -->
-      <div class="arc-stats-row">
-        <div class="arc-stat-card">
-          <div class="arc-stat-icon"><i class="fas fa-file-alt"></i></div>
-          <div class="arc-stat-value" data-count="{{ site.posts | size }}">0</div>
-          <div class="arc-stat-label">TOTAL POSTS</div>
-        </div>
-        <div class="arc-stat-card">
-          <div class="arc-stat-icon"><i class="fas fa-calendar-alt"></i></div>
-          {% assign years = site.posts | map: 'date' | map: 'year' | uniq %}
-          <div class="arc-stat-value" data-count="{{ years | size }}">0</div>
-          <div class="arc-stat-label">ACTIVE YEARS</div>
-        </div>
-        <div class="arc-stat-card">
-          <div class="arc-stat-icon"><i class="fas fa-tags"></i></div>
-          {% assign all_tags = "" | split: "" %}
-          {% for post in site.posts %}
-            {% assign all_tags = all_tags | concat: post.tags %}
-          {% endfor %}
-          {% assign unique_tags = all_tags | uniq %}
-          <div class="arc-stat-value" data-count="{{ unique_tags | size }}">0</div>
-          <div class="arc-stat-label">UNIQUE TAGS</div>
-        </div>
-        <div class="arc-stat-card">
-          <div class="arc-stat-icon"><i class="fas fa-layer-group"></i></div>
-          {% assign all_cats = "" | split: "" %}
-          {% for post in site.posts %}
-            {% assign all_cats = all_cats | concat: post.categories %}
-          {% endfor %}
-          {% assign unique_cats = all_cats | uniq %}
-          <div class="arc-stat-value" data-count="{{ unique_cats | size }}">0</div>
-          <div class="arc-stat-label">CATEGORIES</div>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <!-- ===== SEARCH & FILTER CONTROLS ===== -->
-  <div class="arc-controls">
-    <div class="arc-search-wrap">
-      <i class="fas fa-search arc-search-icon"></i>
-      <input
-        id="arc-search-input"
-        type="text"
-        class="arc-search-input"
-        placeholder="Search posts... (title, tag, category)"
-        autocomplete="off"
-        spellcheck="false"
-      />
-      <span class="arc-search-clear" id="arc-search-clear" title="Clear search">&#x2715;</span>
-    </div>
-
-    <div class="arc-filter-wrap" id="arc-filter-wrap">
-      <button class="arc-filter-btn active" data-filter="all">
-        <i class="fas fa-th-large"></i> ALL
-      </button>
-      {% assign all_cats_2 = "" | split: "" %}
-      {% for post in site.posts %}
-        {% assign all_cats_2 = all_cats_2 | concat: post.categories %}
-      {% endfor %}
-      {% assign unique_cats_2 = all_cats_2 | uniq | sort %}
-      {% for cat in unique_cats_2 %}
-      <button class="arc-filter-btn" data-filter="{{ cat | downcase | replace: ' ', '-' }}">
-        {{ cat | upcase }}
-      </button>
-      {% endfor %}
+<div class="terminal-archive-wrapper">
+  <div class="terminal-header-bar">
+    <div class="terminal-title">root@7rootsec:~# ls -la /var/log/archives</div>
+    <div class="terminal-controls">
+      <span class="control-btn minimize"></span>
+      <span class="control-btn maximize"></span>
+      <span class="control-btn close"></span>
     </div>
   </div>
+  
+  <div class="terminal-body" id="terminal-body">
+    <div class="terminal-intro">
+      <p class="system-msg">System initialized. Decrypting archive database...</p>
+      <p class="system-msg loading-bar">[===================================>] 100% DONE</p>
+      <p class="system-msg">Index loaded. Total records: {{ site.posts | size }}</p>
+    </div>
 
-  <!-- ===== TIMELINE ===== -->
-  <div class="arc-timeline" id="arc-timeline">
-
-    {% assign posts_by_year = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
-    {% for year_group in posts_by_year %}
-    {% assign year_num = year_group.name | plus: 0 %}
-    {% assign hex_year = "" %}
-
-    <!-- Compute hex of year (e.g. 2026 → 0x07EA) -->
-    <div class="arc-year-block" data-year="{{ year_group.name }}">
-      <div class="arc-year-header">
-        <div class="arc-year-line-left"></div>
-        <div class="arc-year-badge">
-          <span class="arc-year-hex">0x{{ year_num | dec_to_hex }}</span>
-          <span class="arc-year-slash">/</span>
-          <span class="arc-year-num">{{ year_group.name }}</span>
-        </div>
-        <div class="arc-year-count">
-          <span>{{ year_group.items | size }}</span>
-          <span class="arc-year-count-label"> posts</span>
-        </div>
-        <div class="arc-year-line-right"></div>
-      </div>
-
-      <ul class="arc-post-list">
-        {% for post in year_group.items %}
-        <li class="arc-post-item"
-            data-title="{{ post.title | escape | downcase }}"
-            data-cats="{{ post.categories | join: ' ' | escape | downcase }}"
-            data-tags="{{ post.tags | join: ' ' | escape | downcase }}"
-            data-filter-key="{{ post.categories | join: ',' | downcase | replace: ' ', '-' | replace: ',', ' ' | escape }}">
-
-          <div class="arc-post-connector">
-            <div class="arc-connector-line"></div>
-            <div class="arc-connector-dot">
-              <span class="arc-dot-pulse"></span>
-            </div>
-          </div>
-
-          <div class="arc-post-card">
-            <div class="arc-post-meta-row">
-              <time class="arc-post-date" datetime="{{ post.date | date_to_xmlschema }}">
-                <i class="fas fa-clock"></i>
-                {{ post.date | date: "%d %b %Y" }}
-              </time>
-
-              {% if post.categories.size > 0 %}
-              <div class="arc-post-cats">
-                {% for cat in post.categories limit:2 %}
-                <span class="arc-cat-tag">{{ cat }}</span>
-                {% endfor %}
-              </div>
-              {% endif %}
-            </div>
-
-            <a class="arc-post-title" href="{{ post.url | relative_url }}">
-              {{ post.title }}
-              <span class="arc-post-arrow"><i class="fas fa-chevron-right"></i></span>
+    <table class="terminal-dir-list">
+      <thead>
+        <tr>
+          <th>PERMISSIONS</th>
+          <th>OWNER</th>
+          <th>SIZE</th>
+          <th>DATE</th>
+          <th>FILE</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>drwxr-xr-x</td>
+          <td>root</td>
+          <td>4096</td>
+          <td>{{ "now" | date: "%b %d %H:%M" }}</td>
+          <td><a href="#" class="dir-link">.</a></td>
+        </tr>
+        <tr>
+          <td>drwxr-xr-x</td>
+          <td>root</td>
+          <td>4096</td>
+          <td>{{ "now" | date: "%b %d %H:%M" }}</td>
+          <td><a href="#" class="dir-link">..</a></td>
+        </tr>
+        {% for post in site.posts %}
+        <tr class="file-row">
+          <td class="perms">-rw-r--r--</td>
+          <td class="owner">7rootsec</td>
+          <td class="size">{{ post.content | size }}</td>
+          <td class="date">{{ post.date | date: "%b %d %Y" }}</td>
+          <td class="filename">
+            <a href="{{ post.url | relative_url }}">
+              {{ post.title | slugify }}.log
             </a>
-
-            {% if post.description or post.excerpt %}
-            <p class="arc-post-excerpt">
-              {{ post.description | default: post.excerpt | strip_html | truncatewords: 22 }}
-            </p>
-            {% endif %}
-
-            <div class="arc-post-footer">
-              {% if post.tags.size > 0 %}
-              <div class="arc-post-tags">
-                <i class="fas fa-hashtag"></i>
-                {% for tag in post.tags limit:4 %}
-                <a href="{{ site.baseurl }}/tags/{{ tag | downcase | replace: ' ', '-' }}/" class="arc-tag-link">{{ tag }}</a>
-                {% endfor %}
-              </div>
-              {% endif %}
-
-              <div class="arc-post-id">
-                <span class="arc-id-label">POST_ID:</span>
-                <span class="arc-id-val">{{ post.date | date: "%Y%m%d" }}</span>
-              </div>
-            </div>
-          </div>
-        </li>
+          </td>
+        </tr>
         {% endfor %}
-      </ul>
-    </div>
-    {% endfor %}
-
-  </div><!-- /.arc-timeline -->
-
-  <!-- ===== EMPTY STATE ===== -->
-  <div class="arc-empty-state" id="arc-empty-state" style="display:none;">
-    <div class="arc-empty-icon"><i class="fas fa-search"></i></div>
-    <div class="arc-empty-title">[ NO_RESULTS ]</div>
-    <div class="arc-empty-sub">No records matching your query in this archive.</div>
-  </div>
-
-  <!-- ===== FOOTER STATUS BAR ===== -->
-  <div class="arc-status-bar">
-    <div class="arc-status-item">
-      <span class="arc-status-dot"></span>
-      <span id="arc-visible-count">{{ site.posts | size }}</span> records indexed
-    </div>
-    <div class="arc-status-item">
-      <i class="fas fa-shield-alt"></i>
-      CLASSIFICATION: UNCLASSIFIED // FOR PUBLIC RELEASE
-    </div>
-    <div class="arc-status-item">
-      <i class="fas fa-code-branch"></i>
-      Archive v2.0
+      </tbody>
+    </table>
+    
+    <div class="terminal-prompt-line">
+      <span class="prompt">root@7rootsec:/var/log/archives#</span>
+      <span class="cursor">_</span>
     </div>
   </div>
+</div>
 
-</div><!-- /.arc-wrapper -->
+<style>
+.terminal-archive-wrapper {
+  background: #0a0a0c;
+  border: 1px solid var(--cyber-neon-green);
+  border-radius: 6px;
+  box-shadow: 0 0 20px rgba(0, 255, 102, 0.1);
+  font-family: 'Share Tech Mono', 'Courier New', monospace;
+  overflow: hidden;
+  margin-top: 2rem;
+}
 
-<script>
-/* =========================================================
-   PREMIUM ARCHIVE PAGE INTERACTIONS
-   ========================================================= */
-(function() {
-  /* --- DOM refs --- */
-  const searchInput  = document.getElementById('arc-search-input');
-  const searchClear  = document.getElementById('arc-search-clear');
-  const filterBtns   = document.querySelectorAll('.arc-filter-btn');
-  const postItems    = document.querySelectorAll('.arc-post-item');
-  const yearBlocks   = document.querySelectorAll('.arc-year-block');
-  const emptyState   = document.getElementById('arc-empty-state');
-  const visibleCount = document.getElementById('arc-visible-count');
-  const totalPosts   = postItems.length;
+.terminal-header-bar {
+  background: #1a1b20;
+  border-bottom: 1px solid rgba(0, 255, 102, 0.3);
+  padding: 8px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-  /* -------------------------------------------------------
-     1. ANIMATED STAT COUNTERS
-  ------------------------------------------------------- */
-  function animateCounter(el) {
-    const target = parseInt(el.getAttribute('data-count'), 10) || 0;
-    const duration = 1400;
-    const start = performance.now();
+.terminal-header-bar .terminal-title {
+  color: #888;
+  font-size: 0.9rem;
+}
 
-    function step(now) {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      // Ease-out cubic
-      const eased = 1 - Math.pow(1 - progress, 3);
-      el.textContent = Math.round(eased * target);
-      if (progress < 1) requestAnimationFrame(step);
-      else el.textContent = target;
-    }
-    requestAnimationFrame(step);
-  }
+.terminal-controls {
+  display: flex;
+  gap: 8px;
+}
 
-  const counterEls = document.querySelectorAll('.arc-stat-value');
-  const heroObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        counterEls.forEach(el => animateCounter(el));
-        heroObserver.disconnect();
-      }
-    });
-  }, { threshold: 0.2 });
+.control-btn {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
 
-  const hero = document.querySelector('.arc-hero');
-  if (hero) heroObserver.observe(hero);
+.control-btn.minimize { background-color: #f1fa8c; }
+.control-btn.maximize { background-color: #50fa7b; }
+.control-btn.close { background-color: #ff5555; }
 
-  /* -------------------------------------------------------
-     2. STAGGERED CARD ENTRANCE (scroll reveal)
-  ------------------------------------------------------- */
-  const cardObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('arc-item-visible');
-      }
-    });
-  }, { threshold: 0.05, rootMargin: '0px 0px -30px 0px' });
+.terminal-body {
+  padding: 20px;
+  color: #f8f8f2;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  overflow-x: auto;
+}
 
-  postItems.forEach((item, i) => {
-    item.style.transitionDelay = `${(i % 8) * 50}ms`;
-    cardObserver.observe(item);
-  });
+.terminal-intro {
+  margin-bottom: 20px;
+}
 
-  /* -------------------------------------------------------
-     3. FILTER + SEARCH LOGIC
-  ------------------------------------------------------- */
-  let activeFilter = 'all';
-  let searchQuery  = '';
+.system-msg {
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0 0 5px 0;
+}
 
-  function applyFilters() {
-    let visible = 0;
+.loading-bar {
+  color: var(--cyber-neon-cyan);
+}
 
-    postItems.forEach(item => {
-      const title     = item.dataset.title    || '';
-      const cats      = item.dataset.cats     || '';
-      const tags      = item.dataset.tags     || '';
-      const filterKey = item.dataset.filterKey|| '';
+.terminal-dir-list {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
 
-      const matchesFilter = activeFilter === 'all' ||
-        filterKey.split(' ').some(k => k === activeFilter);
+.terminal-dir-list th {
+  text-align: left;
+  color: #6272a4;
+  padding: 5px 10px;
+  border-bottom: 1px dashed #6272a4;
+  font-weight: normal;
+}
 
-      const q = searchQuery.toLowerCase();
-      const matchesSearch = !q ||
-        title.includes(q) ||
-        cats.includes(q)  ||
-        tags.includes(q);
+.terminal-dir-list td {
+  padding: 5px 10px;
+  white-space: nowrap;
+}
 
-      if (matchesFilter && matchesSearch) {
-        item.style.display = '';
-        visible++;
-      } else {
-        item.style.display = 'none';
-      }
-    });
+.file-row:hover {
+  background: rgba(0, 255, 102, 0.1);
+}
 
-    /* Hide year blocks that have no visible items */
-    yearBlocks.forEach(block => {
-      const anyVisible = Array.from(block.querySelectorAll('.arc-post-item'))
-        .some(i => i.style.display !== 'none');
-      block.style.display = anyVisible ? '' : 'none';
-    });
+.file-row:hover td {
+  color: var(--cyber-neon-green);
+}
 
-    if (visibleCount) visibleCount.textContent = visible;
-    if (emptyState)   emptyState.style.display  = visible === 0 ? 'flex' : 'none';
-  }
+.perms { color: #8be9fd; }
+.owner { color: #ffb86c; }
+.size { color: #bd93f9; text-align: right; }
+.date { color: #f1fa8c; }
+.filename a {
+  color: #50fa7b;
+  text-decoration: none;
+}
 
-  /* Filter buttons */
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      activeFilter = btn.dataset.filter;
-      applyFilters();
-    });
-  });
+.file-row:hover .filename a {
+  text-shadow: 0 0 5px var(--cyber-neon-green);
+}
 
-  /* Search input */
-  if (searchInput) {
-    searchInput.addEventListener('input', () => {
-      searchQuery = searchInput.value.trim();
-      searchClear.style.opacity = searchQuery ? '1' : '0';
-      applyFilters();
-    });
-  }
+.dir-link {
+  color: #8be9fd !important;
+  font-weight: bold;
+}
 
-  if (searchClear) {
-    searchClear.addEventListener('click', () => {
-      searchInput.value = '';
-      searchQuery = '';
-      searchClear.style.opacity = '0';
-      applyFilters();
-      searchInput.focus();
-    });
-  }
+.terminal-prompt-line {
+  display: flex;
+  margin-top: 20px;
+}
 
-  /* -------------------------------------------------------
-     4. YEAR BLOCK COLLAPSE TOGGLE
-  ------------------------------------------------------- */
-  document.querySelectorAll('.arc-year-header').forEach(header => {
-    header.setAttribute('role', 'button');
-    header.setAttribute('tabindex', '0');
-    header.style.cursor = 'pointer';
+.prompt {
+  color: #ff79c6;
+  margin-right: 10px;
+}
 
-    function toggle() {
-      const block = header.closest('.arc-year-block');
-      const list  = block.querySelector('.arc-post-list');
-      if (!list) return;
-      const isOpen = !block.classList.contains('arc-collapsed');
-      if (isOpen) {
-        list.style.maxHeight = list.scrollHeight + 'px';
-        requestAnimationFrame(() => {
-          list.style.maxHeight = '0px';
-          list.style.opacity   = '0';
-        });
-        block.classList.add('arc-collapsed');
-        header.querySelector('.arc-year-count').classList.add('collapsed-indicator');
-      } else {
-        list.style.maxHeight = list.scrollHeight + 'px';
-        list.style.opacity   = '1';
-        block.classList.remove('arc-collapsed');
-        header.querySelector('.arc-year-count').classList.remove('collapsed-indicator');
-        setTimeout(() => { list.style.maxHeight = 'none'; }, 400);
-      }
-    }
+.cursor {
+  color: #f8f8f2;
+  animation: blink 1s step-end infinite;
+}
 
-    header.addEventListener('click', toggle);
-    header.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
-    });
-  });
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
 
-  /* -------------------------------------------------------
-     5. HERO PARALLAX GRID LINES
-  ------------------------------------------------------- */
-  const heroEl = document.querySelector('.arc-hero');
-  if (heroEl) {
-    window.addEventListener('scroll', () => {
-      const scrolled = window.scrollY;
-      const gridEl = heroEl.querySelector('.arc-hero-grid-lines');
-      if (gridEl) gridEl.style.transform = `translateY(${scrolled * 0.18}px)`;
-    }, { passive: true });
-  }
+/* Typing animation effect */
+.terminal-intro {
+  animation: typing 2s steps(40, end);
+}
 
-  /* -------------------------------------------------------
-     6. KEYBOARD SHORTCUT: "/" focuses search
-  ------------------------------------------------------- */
-  document.addEventListener('keydown', (e) => {
-    if (e.key === '/' && document.activeElement !== searchInput) {
-      e.preventDefault();
-      searchInput && searchInput.focus();
-    }
-    if (e.key === 'Escape' && document.activeElement === searchInput) {
-      searchInput.blur();
-    }
-  });
-
-  /* -------------------------------------------------------
-     7. GLITCH ANIMATION on year badges (random intervals)
-  ------------------------------------------------------- */
-  const yearBadges = document.querySelectorAll('.arc-year-num');
-  yearBadges.forEach(badge => {
-    setInterval(() => {
-      badge.classList.add('arc-glitch');
-      setTimeout(() => badge.classList.remove('arc-glitch'), 350);
-    }, Math.random() * 6000 + 4000);
-  });
-
-})();
-</script>
+@keyframes typing {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+</style>

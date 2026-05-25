@@ -1,0 +1,183 @@
+---
+layout: default
+---
+
+<div class="cyber-categories-dashboard">
+  <div class="dashboard-header">
+    <div class="glitch-title">[ NETWORK TOPOLOGY & TARGET SCOPE ]</div>
+    <div class="dashboard-status">SCANNING PORTS... <span class="blink-cursor">_</span></div>
+  </div>
+
+  <div class="network-nodes-container">
+    {% assign all_categories = site.categories | sort %}
+    {% for category in all_categories %}
+      {% assign category_name = category[0] %}
+      {% assign posts_in_category = category[1] %}
+      
+      <a href="{{ site.baseurl }}/categories/{{ category_name | slugify }}/" class="network-node-card">
+        <div class="node-header">
+          <i class="fas fa-server node-icon"></i>
+          <span class="node-ip">10.0.0.{{ forloop.index }}</span>
+        </div>
+        <div class="node-body">
+          <h3 class="node-name">{{ category_name | upcase }}</h3>
+          <div class="node-stats">
+            <div class="stat-line">
+              <span class="stat-label">VULNS FOUND:</span>
+              <span class="stat-value highlight">{{ posts_in_category | size }}</span>
+            </div>
+            <div class="stat-line">
+              <span class="stat-label">STATUS:</span>
+              <span class="stat-value active">ONLINE</span>
+            </div>
+          </div>
+        </div>
+        <div class="node-footer">
+          <span>CONNECT</span> <i class="fas fa-chevron-right"></i>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+.cyber-categories-dashboard {
+  font-family: 'Share Tech Mono', monospace;
+  color: var(--text-color);
+  margin-top: 2rem;
+}
+
+.dashboard-header {
+  border-bottom: 2px solid var(--cyber-neon-green);
+  padding-bottom: 10px;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.glitch-title {
+  font-size: 1.5rem;
+  color: var(--cyber-neon-green);
+  text-shadow: 0 0 10px rgba(0, 255, 102, 0.5);
+  letter-spacing: 2px;
+}
+
+.dashboard-status {
+  color: var(--cyber-neon-cyan);
+  font-size: 0.9rem;
+}
+
+.blink-cursor {
+  animation: blink 1s step-end infinite;
+}
+
+.network-nodes-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.network-node-card {
+  background: rgba(10, 15, 20, 0.8);
+  border: 1px solid rgba(0, 255, 102, 0.2);
+  border-radius: 4px;
+  padding: 15px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.network-node-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 100%;
+  background: var(--cyber-neon-green);
+  box-shadow: 0 0 10px var(--cyber-neon-green);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.network-node-card:hover {
+  border-color: var(--cyber-neon-green);
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 255, 102, 0.15);
+}
+
+.network-node-card:hover::before {
+  opacity: 1;
+}
+
+.node-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  color: rgba(0, 255, 102, 0.7);
+  font-size: 0.85rem;
+}
+
+.node-icon {
+  font-size: 1.2rem;
+  color: var(--cyber-neon-cyan);
+}
+
+.node-name {
+  font-size: 1.2rem;
+  color: #fff;
+  margin: 0 0 15px 0;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+}
+
+.node-stats {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  border-radius: 2px;
+  border-left: 2px solid rgba(0, 255, 102, 0.3);
+}
+
+.stat-line {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  font-size: 0.85rem;
+}
+
+.stat-line:last-child {
+  margin-bottom: 0;
+}
+
+.stat-label {
+  color: #888;
+}
+
+.stat-value.highlight {
+  color: var(--cyber-neon-green);
+  font-weight: bold;
+}
+
+.stat-value.active {
+  color: var(--cyber-neon-cyan);
+}
+
+.node-footer {
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(0, 255, 102, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--cyber-neon-green);
+  font-size: 0.8rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.network-node-card:hover .node-footer {
+  opacity: 1;
+}
+</style>
