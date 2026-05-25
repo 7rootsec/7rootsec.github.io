@@ -969,3 +969,222 @@ body.crt-active::after {
   color: rgba(0, 255, 102, 0.55);
   margin-right: 8px;
 }
+
+/* ==========================================================================
+   Advanced Cyber Features Upgrade
+   ========================================================================== */
+
+/* 1. Custom Target Crosshair */
+body {
+  cursor: crosshair !important;
+}
+
+a, button, input, .control-dot, .arc-year-header, .widget-title, .terminal-header {
+  cursor: crosshair !important;
+}
+
+/* We can add a custom image cursor if we want, but default crosshair looks cyber */
+/* Let's make hover elements pulse red */
+a:hover, button:hover {
+  text-shadow: 0 0 5px rgba(255, 0, 0, 0.6);
+}
+
+/* 2. Upgraded Control Panel */
+.cyber-control-panel {
+  position: fixed;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(10, 15, 20, 0.9);
+  border: 1px solid var(--cyber-neon-green);
+  border-radius: 4px;
+  padding: 15px;
+  z-index: 9999;
+  box-shadow: 0 0 15px rgba(0, 255, 102, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  transition: all 0.3s ease;
+}
+
+.cyber-control-panel.hidden {
+  transform: translateY(-50%) translateX(-150%);
+}
+
+.panel-toggle-btn {
+  position: fixed;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--cyber-neon-green);
+  color: #000;
+  border: none;
+  padding: 10px 5px;
+  cursor: pointer;
+  z-index: 9998;
+  border-radius: 0 4px 4px 0;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.7rem;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+.panel-switch-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.8rem;
+  color: #fff;
+}
+
+.cyber-switch {
+  position: relative;
+  width: 40px;
+  height: 20px;
+  background: #333;
+  border-radius: 10px;
+  border: 1px solid #555;
+  cursor: crosshair !important;
+}
+
+.cyber-switch::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  background: #888;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.cyber-switch.active {
+  background: rgba(0, 255, 102, 0.2);
+  border-color: var(--cyber-neon-green);
+  box-shadow: 0 0 8px rgba(0, 255, 102, 0.4);
+}
+
+.cyber-switch.active::after {
+  left: 22px;
+  background: var(--cyber-neon-green);
+  box-shadow: 0 0 5px var(--cyber-neon-green);
+}
+
+/* 3. DEFCON 1 Red Alert Mode */
+.cyber-switch.defcon-switch.active {
+  background: rgba(255, 0, 0, 0.2);
+  border-color: #ff0000;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+}
+.cyber-switch.defcon-switch.active::after {
+  background: #ff0000;
+  box-shadow: 0 0 8px #ff0000;
+}
+
+body.defcon-1 {
+  --cyber-neon-green: #ff3333;
+  --cyber-neon-green-glow: 0 0 10px rgba(255, 0, 0, 0.6);
+  --cyber-neon-cyan: #ff9900;
+  --cyber-neon-cyan-glow: 0 0 10px rgba(255, 153, 0, 0.6);
+  --link-color: #ff3333;
+  background-color: #1a0505 !important;
+  animation: defcon-pulse 2s infinite alternate;
+}
+
+@keyframes defcon-pulse {
+  0% { box-shadow: inset 0 0 0px rgba(255, 0, 0, 0); }
+  100% { box-shadow: inset 0 0 50px rgba(255, 0, 0, 0.1); }
+}
+
+/* 4. Threat Intel Post Cards */
+.post-preview {
+  position: relative;
+  overflow: hidden;
+}
+
+.post-preview::before {
+  content: '[CLASSIFIED INTEL]';
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.6rem;
+  color: #ff3333;
+  border: 1px solid #ff3333;
+  padding: 2px 5px;
+  opacity: 0.8;
+  transform: rotate(5deg);
+}
+
+.glitch-desc {
+  position: relative;
+  display: inline-block;
+}
+
+/* 5. Floating Terminal Logger */
+.sys-logger {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 350px;
+  height: 150px;
+  background: rgba(5, 7, 10, 0.85);
+  border: 1px solid rgba(0, 255, 102, 0.3);
+  border-radius: 4px;
+  z-index: 9998;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.7rem;
+  color: #a7f3d0;
+  padding: 10px;
+  overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none; /* Let clicks pass through */
+}
+
+@media (max-width: 768px) {
+  .sys-logger {
+    display: none;
+  }
+  .cyber-control-panel {
+    display: none;
+  }
+  .panel-toggle-btn {
+    display: none;
+  }
+}
+
+.sys-logger-title {
+  color: var(--cyber-neon-green);
+  border-bottom: 1px dashed rgba(0, 255, 102, 0.3);
+  padding-bottom: 4px;
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.sys-logger-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 2px;
+}
+
+.sys-log-line {
+  word-break: break-all;
+  animation: log-fade-in 0.2s ease-out;
+}
+
+.sys-log-line .timestamp {
+  color: rgba(255, 255, 255, 0.4);
+  margin-right: 5px;
+}
+
+@keyframes log-fade-in {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
+}

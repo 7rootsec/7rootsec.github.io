@@ -101,11 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
         <span class="widget-label">Uptime:</span>
         <span class="widget-value" id="session-timer">00:00:00</span>
       </div>
-      <div class="widget-row" style="margin-top: 8px; border-top: 1px dashed rgba(0, 255, 102, 0.15); padding-top: 6px; justify-content: space-between; gap: 4px; flex-wrap: wrap;">
-        <a href="#" id="widget-matrix-toggle" style="color: rgba(0, 255, 102, 0.6); text-decoration: none; border-bottom: 1px dotted; font-size: 0.65rem;">Matrix: OFF</a>
-        <a href="#" id="widget-nodes-toggle" style="color: rgba(0, 255, 102, 0.6); text-decoration: none; border-bottom: 1px dotted; font-size: 0.65rem;">Nodes: OFF</a>
-        <a href="#" id="widget-crt-toggle" style="color: rgba(0, 229, 255, 0.6); text-decoration: none; border-bottom: 1px dotted; font-size: 0.65rem;">CRT: OFF</a>
-      </div>
     `;
 
     const profileWrapper = sidebar.querySelector('.profile-wrapper') || sidebar.firstElementChild;
@@ -741,7 +736,186 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         term.classList.add('minimized');
         trigger.classList.remove('active');
-      }
     }
   });
+
+  // ----------------------------------------------------
+  // 10. FLOATING CONTROL PANEL & DEFCON SWITCH
+  // ----------------------------------------------------
+  const cpToggleBtn = document.createElement('button');
+  cpToggleBtn.className = 'panel-toggle-btn';
+  cpToggleBtn.innerHTML = 'CONTROLS';
+  document.body.appendChild(cpToggleBtn);
+
+  const controlPanel = document.createElement('div');
+  controlPanel.className = 'cyber-control-panel hidden';
+  controlPanel.innerHTML = `
+    <div style="color: var(--cyber-neon-cyan); border-bottom: 1px dashed rgba(0,255,102,0.3); padding-bottom: 5px; margin-bottom: 5px; font-family: 'Share Tech Mono', monospace; font-size: 0.9rem;">
+      >_ SYSTEM OVERRIDES
+    </div>
+    <div class="panel-switch-row">
+      <span>MATRIX RAIN</span>
+      <div class="cyber-switch" id="sw-matrix"></div>
+    </div>
+    <div class="panel-switch-row">
+      <span>NODE MESH</span>
+      <div class="cyber-switch" id="sw-nodes"></div>
+    </div>
+    <div class="panel-switch-row">
+      <span>CRT SCANLINE</span>
+      <div class="cyber-switch" id="sw-crt"></div>
+    </div>
+    <div class="panel-switch-row" style="margin-top: 10px; border-top: 1px solid rgba(255,0,0,0.3); padding-top: 15px;">
+      <span style="color: #ff3333; font-weight: bold;">DEFCON 1</span>
+      <div class="cyber-switch defcon-switch" id="sw-defcon"></div>
+    </div>
+  `;
+  document.body.appendChild(controlPanel);
+
+  cpToggleBtn.addEventListener('click', () => {
+    controlPanel.classList.toggle('hidden');
+  });
+
+  // Sync switches with existing state
+  if (canvasMode === 'matrix') document.getElementById('sw-matrix').classList.add('active');
+  if (canvasMode === 'nodes') document.getElementById('sw-nodes').classList.add('active');
+  if (document.body.classList.contains('crt-active')) document.getElementById('sw-crt').classList.add('active');
+
+  document.getElementById('sw-matrix').addEventListener('click', function() {
+    const isActive = this.classList.contains('active');
+    if (!isActive) {
+      document.getElementById('sw-nodes').classList.remove('active');
+      startCanvasEffect('matrix');
+      localStorage.setItem('canvas-mode', 'matrix');
+      this.classList.add('active');
+      logSystemEvent('Matrix Rain protocol ACTIVATED.');
+    } else {
+      startCanvasEffect('none');
+      localStorage.setItem('canvas-mode', 'none');
+      this.classList.remove('active');
+      logSystemEvent('Matrix Rain protocol DEACTIVATED.');
+    }
+  });
+
+  document.getElementById('sw-nodes').addEventListener('click', function() {
+    const isActive = this.classList.contains('active');
+    if (!isActive) {
+      document.getElementById('sw-matrix').classList.remove('active');
+      startCanvasEffect('nodes');
+      localStorage.setItem('canvas-mode', 'nodes');
+      this.classList.add('active');
+      logSystemEvent('Node Mesh protocol ACTIVATED.');
+    } else {
+      startCanvasEffect('none');
+      localStorage.setItem('canvas-mode', 'none');
+      this.classList.remove('active');
+      logSystemEvent('Node Mesh protocol DEACTIVATED.');
+    }
+  });
+
+  document.getElementById('sw-crt').addEventListener('click', function() {
+    toggleCRT();
+    if (document.body.classList.contains('crt-active')) {
+      this.classList.add('active');
+      logSystemEvent('CRT Scanline overlay ACTIVATED.');
+    } else {
+      this.classList.remove('active');
+      logSystemEvent('CRT Scanline overlay DEACTIVATED.');
+    }
+  });
+
+  document.getElementById('sw-defcon').addEventListener('click', function() {
+    this.classList.toggle('active');
+    document.body.classList.toggle('defcon-1');
+    if (this.classList.contains('active')) {
+      logSystemEvent('WARNING: DEFCON 1 RED ALERT INITIATED.', 'error');
+    } else {
+      logSystemEvent('DEFCON 1 disabled. Returning to standard ops.', 'success');
+    }
+  });
+
+  // ----------------------------------------------------
+  // 11. THREAT INTEL POST CARDS (GLITCH HOVER)
+  // ----------------------------------------------------
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()';
+  document.querySelectorAll('.post-preview p').forEach(p => {
+    const originalText = p.textContent.trim();
+    p.innerHTML = `<span class="glitch-desc" data-original="${originalText}">${originalText}</span>`;
+    
+    p.closest('.post-preview').addEventListener('mouseenter', () => {
+      const span = p.querySelector('.glitch-desc');
+      if (!span) return;
+      let iterations = 0;
+      const interval = setInterval(() => {
+        span.innerText = originalText.split('').map((letter, index) => {
+          if (index < iterations) { return originalText[index]; }
+          return chars[Math.floor(Math.random() * chars.length)];
+        }).join('');
+        
+        if (iterations >= originalText.length) {
+          clearInterval(interval);
+        }
+        iterations += Math.max(1, Math.floor(originalText.length / 10)); // Speed
+      }, 30);
+    });
+  });
+
+  // ----------------------------------------------------
+  // 12. FLOATING SYSTEM LOGGER
+  // ----------------------------------------------------
+  const sysLogger = document.createElement('div');
+  sysLogger.className = 'sys-logger';
+  sysLogger.innerHTML = `
+    <div class="sys-logger-title">
+      <span>[ SYSTEM_LOG_DAEMON ]</span>
+      <span style="color: rgba(255,255,255,0.4)">PID: ${Math.floor(Math.random()*9000)+1000}</span>
+    </div>
+    <div class="sys-logger-content" id="sys-logger-content"></div>
+  `;
+  document.body.appendChild(sysLogger);
+
+  const logContent = document.getElementById('sys-logger-content');
+
+  function logSystemEvent(msg, type = '') {
+    if (!logContent) return;
+    const now = new Date();
+    const timeStr = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
+    
+    const line = document.createElement('div');
+    line.className = `sys-log-line ${type}`;
+    
+    let colorStyle = '';
+    if (type === 'error') colorStyle = 'color: #ff5555;';
+    if (type === 'success') colorStyle = 'color: var(--cyber-neon-green);';
+    
+    line.innerHTML = `<span class="timestamp">[${timeStr}]</span> <span style="${colorStyle}">${msg}</span>`;
+    logContent.appendChild(line);
+    
+    // Keep only last 6 lines
+    if (logContent.children.length > 6) {
+      logContent.removeChild(logContent.firstChild);
+    }
+  }
+
+  // Hook into site interactions for logging
+  document.querySelectorAll('a').forEach(link => {
+    link.addEventListener('mouseenter', () => {
+      let target = link.getAttribute('href') || 'unknown';
+      if (target.length > 30) target = target.substring(0, 30) + '...';
+      logSystemEvent(`Intercepting hover target: ${target}`);
+    });
+  });
+
+  let lastScrollTime = 0;
+  window.addEventListener('scroll', () => {
+    const now = Date.now();
+    if (now - lastScrollTime > 2000) { // Log scroll every 2 seconds max
+      lastScrollTime = now;
+      logSystemEvent(`User scrolled. Y-Offset: ${window.scrollY}px`);
+    }
+  });
+
+  // Initial boot log
+  setTimeout(() => logSystemEvent('SecOps logger daemon started. Listening for events...', 'success'), 500);
+
 });
